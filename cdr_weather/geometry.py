@@ -17,15 +17,12 @@ def get_larger_bounds(coord: list, raster_size: list, start_point: bool = True) 
     Returns:
         tuple: _description_
     """
-    # check if coord is out of bounds or not
-    if (
-        coord[0] < 0
-        or coord[1] < 0
-        or coord[0] > raster_size[0]
-        or coord[1] > raster_size[1]
-    ):
-        print("Warning: coord is out of bounds")
-        return None
+    # check if the coordinate is already at the edge
+    if start_point:
+        coord = [max(0, c) for c in coord]
+
+    else:
+        coord = [min(c, r) for c, r in zip(coord, raster_size)]
 
     new_coord = []
     if start_point:
@@ -50,17 +47,20 @@ def convert_bbox_coord_to_raster_index(
 ) -> Union[None, List[List[int]]]:
     row_start, col_start = raster_src.index(bounding_box[0], bounding_box[3])
     row_stop, col_stop = raster_src.index(bounding_box[2], bounding_box[1])
-    try:
-        row_start, col_start = get_larger_bounds(
-            [row_start, col_start], raster_src.shape, start_point=True
-        )
-        row_stop, col_stop = get_larger_bounds(
-            [row_stop, col_stop], raster_src.shape, start_point=False
-        )
-        coords = [[row_start, row_stop], [col_start, col_stop]]
-        return coords
-    except TypeError:
+    row_start, col_start = get_larger_bounds(
+        [row_start, col_start], raster_src.shape, start_point=True
+    )
+    row_stop, col_stop = get_larger_bounds(
+        [row_stop, col_stop], raster_src.shape, start_point=False
+    )
+    # check if row start - row stop is above zero
+    row_len = row_stop - row_start
+    col_len = col_stop - col_start
+    if row_len <= 0 or col_len <= 0:
         return None
+
+    coords = [[row_start, row_stop], [col_start, col_stop]]
+    return coords
 
 
 def get_weight_matrix(row: pd.Series, src: rasterio.io.DatasetReader):

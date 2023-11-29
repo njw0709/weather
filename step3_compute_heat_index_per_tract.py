@@ -45,7 +45,7 @@ geoid_list = gdf["GEOID10"].tolist()
 
 
 # loop through each year
-for y_idx, year in enumerate(available_years):
+for year in available_years:
     # load heat index raster
     hi_file = os.path.join(raster_location, "hi_{}.nc".format(year))
 

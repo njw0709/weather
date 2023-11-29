@@ -20,7 +20,7 @@ gdf_contiguous_us = gdf[~gdf["STATEFP10"].isin(constants.NON_CONTIGUOUS_STATES)]
 # load raster file (2010) - raster definition matching across years and across temp and humidity
 # already checked in step 1
 raster_location = "/data/Heat/gridMet"
-raster_temp = "tmmx_2016.nc"
+raster_temp = "tmmx_2010.nc"
 
 print("Computing raster weights for each tract...")
 # convert the gdf crs to the raster crs
@@ -54,7 +54,7 @@ df_weights = pd.DataFrame(gdf_contiguous_us.drop(columns="geometry"))
 
 # save to hdf5 file
 df_weights.to_hdf(
-    os.path.join(tract_shape_location, "tract_raster_weights_2016.h5"),
+    os.path.join(tract_shape_location, "tract_raster_weights.h5"),
     key="weights",
     mode="w",
 )
