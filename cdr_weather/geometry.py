@@ -107,6 +107,8 @@ def get_weight_matrix(row: pd.Series, src: rasterio.io.DatasetReader):
 
         # renormalize the weight matrix
         sum_weights = intersection_weight_matrix.sum()
+        if sum_weights == 0:
+            return None
         intersection_weight_matrix = intersection_weight_matrix / sum_weights
         return intersection_weight_matrix
 
