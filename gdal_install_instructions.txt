@@ -1,0 +1,37 @@
+sudo apt-get install gdal-bin
+sudo apt-get install libgdal-dev
+export CPLUS_INCLUDE_PATH=/usr/include/gdal
+export C_INCLUDE_PATH=/usr/include/gdal
+-> did install (gdalinfo --version working)
+pip install pygeoprocessing 
+-> need to link _gdal to python?
+-- not working
+# install gdal
+conda install -c conda-forge gdal
+pip install pygeoprocessing
+-- not working
+
+building from source:
+https://gdal.org/development/building_from_source.html
+-- failed
+
+
+-- using instructions: 
+https://stackoverflow.com/questions/44005694/no-module-named-gdal
+
+sudo apt-get update && sudo apt upgrade -y && sudo apt autoremove 
+sudo apt-get install -y cdo nco gdal-bin libgdal-dev
+
+conda install -c conda-forge libgdal
+conda install -c conda-forge gdal
+conda install tiledb=2.2
+conda install poppler
+ -> installs osgeo, gdal, poppler, tiledb, etc.
+ -> must use "base" environment? don't know how to link to other conda environments.
+ -> works in base conda environment.
+
+conda install -c conda-forge libgdal
+conda install -c conda-forge gdal
+conda install tiledb=2.2
+conda install poppler
+--> then did conda install all above in new conda environment, and it worked.
