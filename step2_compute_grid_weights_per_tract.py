@@ -50,7 +50,11 @@ with rasterio.open(os.path.join(raster_location, raster_temp)) as temp_data:
 
 print("Saving to file...")
 # drop geometry column and save to pandas df
-df_weights = pd.DataFrame(gdf_contiguous_us.drop(columns="geometry"))
+df_weights = pd.DataFrame(
+    gdf_contiguous_us.loc[
+        :, ["raster_bbox_coords", "weight", "area", "GEOID10", "bounds"]
+    ]
+)
 
 # save to hdf5 file
 df_weights.to_hdf(

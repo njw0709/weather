@@ -111,7 +111,6 @@ def get_weight_matrix(row: pd.Series, src: rasterio.io.DatasetReader):
             return None
         intersection_weight_matrix = intersection_weight_matrix / sum_weights
         return intersection_weight_matrix
-
     except Exception as e:
         print(e)
         return None
