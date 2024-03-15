@@ -27,10 +27,11 @@ from cdr_weather import constants, utils
 download_parameters = constants.DOWNLOAD_PARAMETER_LIST
 
 # indicate the desired year(s) or range of years to download
-years = list(range(1979, 2022))
+# years = list(range(1979, 2022))
+years = list(range(2022, 2024))
 
 # save directory
-save_dir = "/data/Heat/gridMet/"
+save_dir = "/data/Heat/data/raw/gridMet"
 
 start = time.process_time()
 # use concurrent.futures to parallelize the file downloads

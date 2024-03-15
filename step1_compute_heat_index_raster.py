@@ -5,7 +5,8 @@ from cdr_weather import heat_index as hi
 from cdr_weather import rasterutils
 
 # raster file directory
-raster_location = "/data/Heat/gridMet"
+raster_location = "/data/Heat/data/raw/gridMet"
+
 
 # list all tmmx.nc files
 raster_temp_list = [
@@ -49,6 +50,7 @@ for f2 in raster_humid_list:
 
 
 # compute heat index and save to file
+available_years_temp = [2022, 2023]
 for year in tqdm(available_years_temp):
     # save name
     hi_file_name = os.path.join(raster_location, "hi_{}.nc".format(year))

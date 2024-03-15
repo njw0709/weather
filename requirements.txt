@@ -5,3 +5,4 @@ netCDF4
 shapely
 pytest
 cartopy
+numpy

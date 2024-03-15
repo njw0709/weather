@@ -1,8 +1,11 @@
 # project
 /notebooks
+/packages
 *.egg-info
 .vscode
 environment.yml
+/python*
+*.zip
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
