@@ -32,7 +32,6 @@ available_years = [
     for f in os.listdir(raster_location)
     if f.endswith("nc") and f.startswith("hi")
 ]
-available_years = [2022, 2023]
 available_years.sort()
 
 # create numpy array of size (num_years, num_tracts, num_days)
@@ -44,11 +43,15 @@ save_dir = "/data/Heat/data/processed/daily_measures"
 
 geoid_list = gdf["GEOID10"].tolist()
 
-data_types = {"tmmx": "air_temperature",
-              "tmmn": "air_temperature",
-              "rmax": "relative_humidity",
-              "rmin": "relative_humidity",
-              "hi": "heat_index"}
+data_types = {
+    # "tmmx": "air_temperature",
+    # "tmmn": "air_temperature",
+    # "rmax": "relative_humidity",
+    # "rmin": "relative_humidity",
+    # "hi": "heat_index"
+    "wc": "wind_chill",
+    "pr": "precipitation_amount",
+              }
 
 # loop through each year
 for year in available_years:
