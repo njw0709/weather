@@ -1,5 +1,15 @@
 import numpy as np
 
+def kelvin_to_celsius(t: np.ndarray) -> np.ndarray:
+    """_summary_
+
+    Args:
+        t (np.ndarray): temperature in degrees Kelvin
+
+    Returns:
+        np.ndarray: temperature in degrees Celsius
+    """
+    return t - 273.15
 
 def kelvin_to_fahrenheit(t: np.ndarray) -> np.ndarray:
     """_summary_
