@@ -51,7 +51,7 @@ data_types = {
     # "hi": "heat_index"
     "wc": "wind_chill",
     "pr": "precipitation_amount",
-              }
+    }
 
 # loop through each year
 for year in available_years:

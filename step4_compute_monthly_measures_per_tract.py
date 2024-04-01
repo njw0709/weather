@@ -10,7 +10,9 @@ tmmn_csvs = [os.path.join(daily_measure_csv_dir, f) for f in os.listdir(daily_me
 rmax_csvs = [os.path.join(daily_measure_csv_dir, f) for f in os.listdir(daily_measure_csv_dir) if f.endswith("rmax.csv")]
 rmin_csvs = [os.path.join(daily_measure_csv_dir, f) for f in os.listdir(daily_measure_csv_dir) if f.endswith("rmin.csv")]
 hi_csvs = [os.path.join(daily_measure_csv_dir, f) for f in os.listdir(daily_measure_csv_dir) if f.endswith("heat_index.csv")]
-all_csvs = tmmx_csvs + tmmn_csvs + rmax_csvs + rmin_csvs + hi_csvs
+wc_csvs = [os.path.join(daily_measure_csv_dir, f) for f in os.listdir(daily_measure_csv_dir) if f.endswith("wc.csv")]
+pr_csvs = [os.path.join(daily_measure_csv_dir, f) for f in os.listdir(daily_measure_csv_dir) if f.endswith("pr.csv")]
+all_csvs = tmmx_csvs + tmmn_csvs + rmax_csvs + rmin_csvs + hi_csvs + wc_csvs + pr_csvs
 
 for csvfile in tqdm(all_csvs):
     df = pd.read_csv(csvfile, index_col=0)
