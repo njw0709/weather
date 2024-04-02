@@ -49,8 +49,9 @@ data_types = {
     # "rmax": "relative_humidity",
     # "rmin": "relative_humidity",
     # "hi": "heat_index"
-    "wc": "wind_chill",
-    "pr": "precipitation_amount",
+    # "wc_celsius": "wind_chill",
+    "wc_fahrenheit": "wind_chill",
+    # "pr": "precipitation_amount",
     }
 
 # loop through each year
@@ -70,7 +71,7 @@ for year in available_years:
         print("Reading took {} seconds".format(time.time() - t))
 
         # create placeholder numpy array
-        daily_heat_idx_np = np.zeros((num_tracts, raster_data.shape[0]))
+        daily_measure_np = np.zeros((num_tracts, raster_data.shape[0]))
 
         # loop through each tract
         for idx, row in tqdm(gdf.iterrows(), total=gdf.shape[0]):
@@ -79,14 +80,14 @@ for year in available_years:
             # get weight matrix
             weight = row["weight"]
             if weight is None:
-                daily_heat_idx_np[idx, :] = np.nan
+                daily_measure_np[idx, :] = np.nan
                 continue
             # get subset
             (row_start, row_stop), (col_start, col_stop) = raster_bbox_coords
             hi_data_subset = raster_data[:, row_start:row_stop, col_start:col_stop]
             # compute heat index
             daily_heat_tract = np.sum(hi_data_subset * weight, axis=(1, 2))
-            daily_heat_idx_np[idx, :] = daily_heat_tract
+            daily_measure_np[idx, :] = daily_heat_tract
 
         # save to file
         print("Saving {} for year {}...".format(dtype, year))
@@ -98,6 +99,6 @@ for year in available_years:
         )
 
         # create df with columns = geoid and row_index = day index
-        df = pd.DataFrame(daily_heat_idx_np.T, columns=geoid_list, index=daily_index)
+        df = pd.DataFrame(daily_measure_np.T, columns=geoid_list, index=daily_index)
         df.to_csv(os.path.join(save_dir, "{}_daily_{}.csv".format(year, dtype)))
         print("Saving took {} seconds".format(time.time() - t))
