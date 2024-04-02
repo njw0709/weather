@@ -44,14 +44,14 @@ save_dir = "/data/Heat/data/processed/daily_measures"
 geoid_list = gdf["GEOID10"].tolist()
 
 data_types = {
-    # "tmmx": "air_temperature",
-    # "tmmn": "air_temperature",
-    # "rmax": "relative_humidity",
-    # "rmin": "relative_humidity",
-    # "hi": "heat_index"
-    # "wc_celsius": "wind_chill",
+    "tmmx": "air_temperature",
+    "tmmn": "air_temperature",
+    "rmax": "relative_humidity",
+    "rmin": "relative_humidity",
+    "hi": "heat_index",
+    "wc_celsius": "wind_chill",
     "wc_fahrenheit": "wind_chill",
-    # "pr": "precipitation_amount",
+    "pr": "precipitation_amount",
     }
 
 # loop through each year

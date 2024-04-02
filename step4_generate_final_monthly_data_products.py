@@ -17,7 +17,7 @@ def reformat_df(df, column_header: str):
 # daily min and max temperature averaged
 print("Processing daily min and max temperature...")
 tmmx_csvs = [os.path.join(daily_measure_csv_dir, f) for f in os.listdir(daily_measure_csv_dir) if f.endswith("tmmx.csv")]
-for i in range(len(tmmx_csvs)):
+for i in tqdm(range(len(tmmx_csvs))):
     df_tmmx = pd.read_csv(os.path.join(daily_measure_csv_dir, tmmx_csvs[i]), index_col=0, parse_dates=[0])
     df_tmmn = pd.read_csv(os.path.join(daily_measure_csv_dir, tmmx_csvs[i].replace("tmmx", "tmmn")), index_col=0, parse_dates=[0])
     year = os.path.basename(tmmx_csvs[i]).split("_")[0]
@@ -69,7 +69,7 @@ print("Processing heat index...")
 hi_csvs = [os.path.join(daily_measure_csv_dir, f) for f in os.listdir(daily_measure_csv_dir) if f.endswith("heat_index.csv")]
 for i in tqdm(range(len(hi_csvs))):
     year = os.path.basename(hi_csvs[i]).split("_")[0]
-    df_hi = pd.read_csv(os.path.join(daily_measure_csv_dir, hi_csvs[0]), index_col=0, parse_dates=[0])
+    df_hi = pd.read_csv(os.path.join(daily_measure_csv_dir, hi_csvs[i]), index_col=0, parse_dates=[0])
 
     # level 0: below 80F
     df_hi_level0 = df_hi<80
