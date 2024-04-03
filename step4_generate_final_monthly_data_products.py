@@ -17,6 +17,7 @@ def reformat_df(df, column_header: str):
 # daily min and max temperature averaged
 print("Processing daily min and max temperature...")
 tmmx_csvs = [os.path.join(daily_measure_csv_dir, f) for f in os.listdir(daily_measure_csv_dir) if f.endswith("tmmx.csv")]
+tmmx_csvs.sort()
 for i in tqdm(range(len(tmmx_csvs))):
     df_tmmx = pd.read_csv(os.path.join(daily_measure_csv_dir, tmmx_csvs[i]), index_col=0, parse_dates=[0])
     df_tmmn = pd.read_csv(os.path.join(daily_measure_csv_dir, tmmx_csvs[i].replace("tmmx", "tmmn")), index_col=0, parse_dates=[0])
@@ -35,6 +36,7 @@ for i in tqdm(range(len(tmmx_csvs))):
 # precipitation
 print("Processing precipitation...")
 pr_csvs = [os.path.join(daily_measure_csv_dir, f) for f in os.listdir(daily_measure_csv_dir) if f.endswith("pr.csv")]
+pr_csvs.sort()
 for i in tqdm(range(len(pr_csvs))):
     year = os.path.basename(pr_csvs[i]).split("_")[0]
     df_pr = pd.read_csv(os.path.join(daily_measure_csv_dir, pr_csvs[i]), index_col=0, parse_dates=[0])
@@ -67,6 +69,7 @@ for i in tqdm(range(len(pr_csvs))):
 # heat index
 print("Processing heat index...")
 hi_csvs = [os.path.join(daily_measure_csv_dir, f) for f in os.listdir(daily_measure_csv_dir) if f.endswith("heat_index.csv")]
+hi_csvs.sort()
 for i in tqdm(range(len(hi_csvs))):
     year = os.path.basename(hi_csvs[i]).split("_")[0]
     df_hi = pd.read_csv(os.path.join(daily_measure_csv_dir, hi_csvs[i]), index_col=0, parse_dates=[0])
@@ -128,8 +131,9 @@ for i in tqdm(range(len(hi_csvs))):
 # wind chill
 print("Processing wind chill, celsius / fahrenheit...")
 wc_c_csvs = [os.path.join(daily_measure_csv_dir, f) for f in os.listdir(daily_measure_csv_dir) if f.endswith("wc_celsius.csv")]
+wc_c_csvs.sort()
 for i in tqdm(range(len(wc_c_csvs))):
-    
+    year = os.path.basename(wc_c_csvs[i]).split("_")[0]
     df_wc_c = pd.read_csv(os.path.join(daily_measure_csv_dir, wc_c_csvs[i]), index_col=0, parse_dates=[0])
     df_wc_f = pd.read_csv(os.path.join(daily_measure_csv_dir, wc_c_csvs[i].replace("celsius", "fahrenheit")), index_col=0, parse_dates=[0])
 
