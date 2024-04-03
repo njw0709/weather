@@ -1,6 +1,11 @@
 import numpy as np
+from typing import Union
+import pandas as pd
 
-def kelvin_to_celsius(t: np.ndarray) -> np.ndarray:
+
+def kelvin_to_celsius(
+    t: Union[np.ndarray, pd.DataFrame]
+) -> Union[np.ndarray, pd.DataFrame]:
     """_summary_
 
     Args:
@@ -11,7 +16,10 @@ def kelvin_to_celsius(t: np.ndarray) -> np.ndarray:
     """
     return t - 273.15
 
-def kelvin_to_fahrenheit(t: np.ndarray) -> np.ndarray:
+
+def kelvin_to_fahrenheit(
+    t: Union[np.ndarray, pd.DataFrame]
+) -> Union[np.ndarray, pd.DataFrame]:
     """_summary_
 
     Args:
