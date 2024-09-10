@@ -5,7 +5,7 @@ from cdr_weather import heat_index as hi
 from cdr_weather import rasterutils
 
 # raster file directory
-raster_location = "/data/Heat/data/raw/gridMet"
+raster_location = "/data/weather/data/raw/gridMet"
 
 
 # list all tmmx.nc files
@@ -50,21 +50,35 @@ for f2 in raster_humid_list:
 
 
 # compute heat index and save to file
-available_years_temp = [2022, 2023]
 for year in tqdm(available_years_temp):
     # save name
-    hi_file_name = os.path.join(raster_location, "hi_{}.nc".format(year))
+    hi_file_name = os.path.join(raster_location, "hi_mean_{}.nc".format(year))
 
     # load files
     air_temp_file_name = os.path.join(raster_location, "tmmx_{}.nc".format(year))
+    air_temp_min_file_name = os.path.join(raster_location, "tmmn_{}.nc".format(year))
     relative_humidity_file_name = os.path.join(
         raster_location, "rmin_{}.nc".format(year)
     )
+    relative_humidity_max_file_name = os.path.join(
+        raster_location, "rmax_{}.nc".format(year)
+    )
+
     with nc.Dataset(relative_humidity_file_name, "r") as data:
-        relative_humidity = data.variables["relative_humidity"][:]
+        relative_humidity_ = data.variables["relative_humidity"][:]
+
+    with nc.Dataset(relative_humidity_max_file_name, "r") as data:
+        relative_humidity_max = data.variables["relative_humidity"][:]
+
+    relative_humidity = (relative_humidity_ + relative_humidity_max) / 2
+
+    with nc.Dataset(air_temp_min_file_name, "r") as data:
+        air_temp_min = data.variables["air_temperature"][:]
 
     with nc.Dataset(air_temp_file_name, "r") as data:
-        air_temp = data.variables["air_temperature"][:]
+        air_temp_max = data.variables["air_temperature"][:]
+        air_temp = (air_temp_min + air_temp_max) / 2
+
         dimensions = data.variables["air_temperature"].dimensions
         file_format = data.file_format
 

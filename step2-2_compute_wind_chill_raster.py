@@ -6,7 +6,7 @@ from cdr_weather import wind_chill as wc
 from cdr_weather import rasterutils
 
 # raster file directory
-raster_location = "/data/Heat/data/raw/gridMet"
+raster_location = "/data/weather/data/raw/gridMet"
 
 
 # list all tmmn.nc files
@@ -58,9 +58,7 @@ for year in tqdm(available_years_temp):
 
     # load files
     air_temp_file_name = os.path.join(raster_location, "tmmn_{}.nc".format(year))
-    wind_velocity_file_name = os.path.join(
-        raster_location, "vs_{}.nc".format(year)
-    )
+    wind_velocity_file_name = os.path.join(raster_location, "vs_{}.nc".format(year))
     with nc.Dataset(wind_velocity_file_name, "r") as data:
         wind_velocity = data.variables["wind_speed"][:]
 
@@ -77,7 +75,7 @@ for year in tqdm(available_years_temp):
         wind_chill_c = wc.compute_wind_chill_celsius(air_temp_c, wind_velocity)
         wind_velocity_mph = wc.meters_per_second_to_mph(wind_velocity)
         wind_chill_f = wc.compute_wind_chill_farhenheit(air_temp_f, wind_velocity_mph)
-        
+
         # save wind chill to file
         with nc.Dataset(wc_file_name_c, "w", format=file_format) as dst:
             # copy attrs (dimensions, file_format, etc.)
@@ -86,7 +84,7 @@ for year in tqdm(available_years_temp):
             rasterutils.save_var(
                 dst, "wind_chill", wind_chill_c, dimensions, compression="zlib"
             )
-            
+
         with nc.Dataset(wc_file_name_f, "w", format=file_format) as dst:
             # copy attrs (dimensions, file_format, etc.)
             rasterutils.copy_attrs(data, dst, skip_var=["air_temperature"])

@@ -68,6 +68,8 @@ for year in available_years:
             raster_data = data.variables[key][:]
         print("Reading took {} seconds".format(time.time() - t))
 
+        # create monthly measure using Kate's logic (threshold first, then compute area-weighted average)
+
         # create placeholder numpy array
         daily_measure_np = np.zeros((num_tracts, raster_data.shape[0]))
 
@@ -82,10 +84,10 @@ for year in available_years:
                 continue
             # get subset
             (row_start, row_stop), (col_start, col_stop) = raster_bbox_coords
-            hi_data_subset = raster_data[:, row_start:row_stop, col_start:col_stop]
+            raster_data_subset = raster_data[:, row_start:row_stop, col_start:col_stop]
             # compute heat index
-            daily_heat_tract = np.sum(hi_data_subset * weight, axis=(1, 2))
-            daily_measure_np[idx, :] = daily_heat_tract
+            daily_data_tract = np.sum(raster_data_subset * weight, axis=(1, 2))
+            daily_measure_np[idx, :] = daily_data_tract
 
         # save to file
         print("Saving {} for year {}...".format(dtype, year))
